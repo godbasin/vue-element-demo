@@ -109,8 +109,12 @@ export default {
           this.tableData.splice(itemIndex, 1, {...item});
         }
       }else{
-        // 添加到列表中，同时自增 id 
-        this.tableData.push({...item, id: this.tableData.length + 1});
+        // 添加到列表中，同时自增 id
+        if (this.tableData.length !== 0) {
+          this.tableData.push({...item, id: tableData[tableData.length - 1].id + 1})
+        } else {
+          this.tableData.push({...item, id: 1})
+        }
       }
     },
     // 删除一个数据
@@ -162,7 +166,7 @@ export default {
       this.$refs['form'].validate((valid) => {
         if (valid) {
           // 校验通过
-          this.dialogFormVisible = false; 
+          this.dialogFormVisible = false;
           this.updateTableItem(this.form);
         } else {
           // 校验失败
